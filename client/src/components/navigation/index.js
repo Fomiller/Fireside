@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
 export default function NavbarDrawer() {
   const classes = useStyles();
   const theme = useTheme();
@@ -132,10 +136,10 @@ export default function NavbarDrawer() {
         <Divider />
         <List>
           {['Profile', 'Inbox', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItemLink key={text} href={text}>
               <ListItemIcon>{index % 2 === 0 ? <PersonIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
-            </ListItem>
+            </ListItemLink>
           ))}
         </List>
         <Divider />
