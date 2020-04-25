@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import {Home, Login, SignUp, Profile, User} from './pages';
+import {Home, SignIn, SignUp, Profile, User} from './pages';
+import StickyFooter from './components/footer';
 
 function App() {
   return (
@@ -10,8 +11,8 @@ function App() {
         <Route exact path={['/','/home']}>
           <Home/>
         </Route>
-        <Route exact path='/login'>
-          <Login/>
+        <Route exact path='/signin'>
+          <SignIn/>
         </Route>
         <Route exact path='/signup'>
           <SignUp/>
@@ -23,6 +24,7 @@ function App() {
           <User/>
         </Route>
       </Switch>
+      <StickyFooter/>
     </Router>
   );
 }
