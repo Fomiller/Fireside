@@ -3,24 +3,28 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import {Home, SignIn, SignUp, Profile, User} from './pages';
 import StickyFooter from './components/footer';
+import NavbarDrawer from './components/navigation';
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path={['/','/home']}>
-          <Home/>
-        </Route>
         <Route exact path='/signin'>
           <SignIn/>
         </Route>
         <Route exact path='/signup'>
           <SignUp/>
         </Route>
+        <Route exact path={['/','/home']}>
+          <NavbarDrawer/>
+          <Home/>
+        </Route>
         <Route exact path='/profile'>
+          <NavbarDrawer/>
           <Profile/>
         </Route>
         <Route exact path='/user/:id'>
+          <NavbarDrawer/>
           <User/>
         </Route>
       </Switch>
