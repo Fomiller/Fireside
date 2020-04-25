@@ -131,7 +131,7 @@ export default function NavbarDrawer() {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Profile', 'Inbox', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <PersonIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
