@@ -34,7 +34,7 @@ const AppProvider = ({value = [], ...props}) => {
           name:"Test Chat",
           messages: [
             {
-              userId: "Mike Jones",
+              user: "Mike Jones",
               body:"This is a sample message. The quick foxed jumped over the lazy dog."
             }
           ]
