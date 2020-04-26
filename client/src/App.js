@@ -5,7 +5,7 @@ import {Home, SignIn, SignUp, Profile, User, NoMatch} from './pages';
 import StickyFooter from './components/footer';
 import NavbarDrawer from './components/navigation';
 import ApplicationTheme from './utils/theme';
-import AppProvider from './utils/GlobalContext';
+import {AppProvider} from './utils/GlobalContext';
 
 function App() {
   return (
