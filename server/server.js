@@ -1,47 +1,71 @@
-const http = require('http');
-const express = require('express');
-const socketio = require('socket.io');
-
-const router = require('./router');
-const PORT = process.env.PORT || 3001;
-
+const express = require("express");
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
-app.use(router);
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+const config = require("./config/key");
 
-io.on('connection', (socket) => {
-  socket.on('join', ({ name, room }, cb) => {
-    
-    const { error, user } = ''; // TODO: add user in here
+const mongoose = require("mongoose");
+const connect = mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 
-    if (error) return cb(error);
-    
-    socket.join(user.room);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+const { Chat } = require("./models/Chat");
 
-    cb()
-  });
+app.use('/api/users', require('./routes/users'));
 
-  socket.on('sendMessage', (message, cb) => {
-    const user = ''; // TODO: get user in here
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
+io.on("connection", socket => {
 
-    cb();
-  });
+  socket.on("Input Chat Message", msg => {
 
-  socket.on('disconnect', () => {
-    const user = ''; // TODO: get user in here
+    connect.then(db => {
+      try {
+          let chat = new Chat({ message: msg.chatMessage, sender:msg.userID, type: msg.type })
 
-    if (user) {
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
-    }
-  });
+          chat.save((err, doc) => {
+            if(err) return res.json({ success: false, err })
+
+            Chat.find({ "_id": doc._id })
+            .populate("sender")
+            .exec((err, doc)=> {
+
+                return io.emit("Output Chat Message", doc);
+            })
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    })
+   })
 
 })
 
-server.listen(PORT, () => console.log(`Server is listening on port ${PORT}!`));
+
+//use this to show the image you have in node js server to client (react js)
+//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
+app.use('/uploads', express.static('uploads'));
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  // index.html for all page routes
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
+const port = process.env.PORT || 5000
+
+server.listen(port, () => {
+  console.log(`Server Running at ${port}`)
+});
