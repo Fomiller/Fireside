@@ -1,10 +1,16 @@
 import React, {useContext, createContext, useReducer} from 'react';
 
+
 const AppContext = createContext()
 const { Provider } = AppContext;
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "TOGGLE_DARK_MODE":
+      return{
+        ...state,
+        darkMode: action.payload
+      };
     default:
       return state;
   }
@@ -12,6 +18,7 @@ const reducer = (state, action) => {
 
 const AppProvider = ({value = [], ...props}) => {
   const [state, dispatch] = useReducer(reducer, {
+    darkMode:true,
     user: {
       name:"Forrest Miller",
       email: "Forrest@test.com",
