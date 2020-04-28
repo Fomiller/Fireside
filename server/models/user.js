@@ -11,6 +11,10 @@ const UserSchema = new Schema({
         type: String,
         require: "Last name is required"
     },
+    username: {
+        type: String,
+        require: "username is required"
+    },
     password: {
         type: String,
         require: "password is required"
