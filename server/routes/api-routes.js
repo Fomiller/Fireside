@@ -29,10 +29,20 @@ module.exports = function(app){
       });
   });
 
+  app.get('/api/users/:id', (req, res) => {
+    db.User.findOne({ _id: req.params.id })
+    .then(User => {
+      res.json(User)
+    })
+    .catch(err => {
+      res.json(err);
+    });
+  });
+
 // -----------------------------------------------------------------------------------------
 
-  // // add/pushes an EXERCISE into a WORKOUT
-  // // Updates the Workout Model
+  // add/pushes an EXERCISE into a WORKOUT
+  // Updates the Workout Model
   // app.put('/api/workouts/:id', (req, res) => {
   //   // create a new exercise using request.body
   //   const workoutID = req.params.id
@@ -62,15 +72,7 @@ module.exports = function(app){
   //     });
   // });
   
-  // app.get('/api/workouts/:id', (req, res) => {
-  //   db.Workout.findOne({ _id: req.params.id })
-  //   .then(dbWorkout => {
-  //     res.json(dbWorkout)
-  //   })
-  //   .catch(err => {
-  //     res.json(err);
-  //   });
-  // });
+
 
 
 
