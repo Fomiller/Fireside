@@ -1,5 +1,4 @@
 const db = require('../models');
-console.log(db.User);
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
@@ -18,8 +17,9 @@ module.exports = function (app) {
   });
 
   //Route for registering new user
-  router.post('/api/users', (req, res) => {
+  app.post('/api/users', (req, res) => {
     Users = new User({ email: req.body.email, username: req.body.username });
+    console.log("test",Users)
 
     User.register(Users, req.body.password, function (err, user) {
       if (err) {
@@ -31,7 +31,7 @@ module.exports = function (app) {
   });
 
   // Route for loging in
-  router.post('/api/login', (req, res) => {
+  app.post('/api/login', (req, res) => {
     if (!req.body.username) {
       res.json({ success: false, message: "Username was not given" })
     } else {
