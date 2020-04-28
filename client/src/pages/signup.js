@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {createUser} from '../utils/API';
 
 function Copyright() {
   return (
@@ -54,14 +55,14 @@ export default function SignUp() {
   const handleChange = (e) => {
     const name = e.currentTarget.name
     const value = e.currentTarget.value
-    state[name] = value;
+    setState({...state, [name]: value})
     console.log(state)
   }
 
   const handleUserSubmit = (e) => {
     e.preventDefault()
     console.log("NEW USER STATE",state)
-    // API.login(state);
+    // createUser(state);
   }
 
   return (
