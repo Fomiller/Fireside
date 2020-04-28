@@ -1,24 +1,31 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-
+// Socket.io setup
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-const config = require("./config/key");
-
+// require Mongoose
 const mongoose = require("mongoose");
-const connect = mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+
+// Dont know what these are used for
+const bodyParser = require("body-parser");
+// const cookieParser = require("cookie-parser");
+// dont know what this is
+// const config = require("./config/key");
+
+
+// Connecting to mongoose.
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/firesideDB", { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser());
+
+// dont know what this is used for
+// app.use(cookieParser());
 
 const { Chat } = require("./models/Chat");
 
-app.use('/api/users', require('./routes/users'));
+// Allow the app to use the api routes
+require('./routes/api-routes.js')(app);
 
 
 io.on("connection", socket => {
