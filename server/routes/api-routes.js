@@ -29,6 +29,7 @@ module.exports = function(app){
       });
   });
 
+  // get a single USER by id
   app.get('/api/users/:id', (req, res) => {
     db.User.findOne({ _id: req.params.id })
     .then(User => {
@@ -39,27 +40,24 @@ module.exports = function(app){
     });
   });
 
+  app.put('/api/users/:id', (req, res) => {
+    db.User.findOneAndUpdate({_id:req.params.id}, req.body, { new: true })
+    .then(User => 
+      res.json(User)
+    )
+    .catch(err => {
+      // if an error occurs send the error to the client
+      res.json(err);
+    });
+
+  });
+  
+
 // -----------------------------------------------------------------------------------------
 
   // add/pushes an EXERCISE into a WORKOUT
   // Updates the Workout Model
-  // app.put('/api/workouts/:id', (req, res) => {
-  //   // create a new exercise using request.body
-  //   const workoutID = req.params.id
-  //   console.log(workoutID)
-  //   // const exercise = new db.Exercise(req.body);
-  //   // console.log('EXERCISE TO ADD: ',exercise);
 
-  //   db.Exercise.create(req.body)
-  //     .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: workoutID }, { $push: { exercises: _id }}, { new: true }))
-  //     .then(dbWorkout => {
-  //       res.json(dbWorkout);
-  //     })
-  //     .catch(err => {
-  //       // if an error occurs send the error to the client
-  //       res.json(err);
-  //     });
-  // });
   
   // app.get('/api/workouts/range', (req, res) => {
   //   db.Workout.find({})
