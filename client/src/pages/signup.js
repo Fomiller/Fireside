@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Fireside
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -47,7 +47,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const [state, setState] = useState({})
+
   const classes = useStyles();
+
+  const handleChange = (e) => {
+    const name = e.currentTarget.name
+    const value = e.currentTarget.value
+    state[name] = value;
+    console.log(state)
+  }
+
+  const handleUserSubmit = (e) => {
+    e.preventDefault()
+    console.log("NEW USER STATE",state)
+    // API.login(state);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,6 +86,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,6 +98,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +110,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,12 +123,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -120,6 +133,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleUserSubmit}
           >
             Sign Up
           </Button>
