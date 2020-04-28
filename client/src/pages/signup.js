@@ -62,7 +62,7 @@ export default function SignUp() {
   const handleUserSubmit = (e) => {
     e.preventDefault()
     console.log("NEW USER STATE",state)
-    // createUser(state);
+    createUser(state);
   }
 
   return (
@@ -77,6 +77,18 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
