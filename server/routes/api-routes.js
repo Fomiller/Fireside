@@ -18,7 +18,12 @@ module.exports = function (app) {
 
   //Route for registering new user
   app.post('/api/users', (req, res) => {
-    Users = new User({ email: req.body.email, username: req.body.username });
+    Users = new User({ 
+      email: req.body.email,
+      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+     });
     console.log("test",Users)
 
     User.register(Users, req.body.password, function (err, user) {
