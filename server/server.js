@@ -1,71 +1,66 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
-const config = require("./config/key");
-
+const http = require('http');
+const express = require('express');
+const socketio = require('socket.io');
 const mongoose = require("mongoose");
-const connect = mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+const passport = require('./config/passport');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
-const { Chat } = require("./models/Chat");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/user", { useNewUrlParser: true });
+ 
 
-app.use('/api/users', require('./routes/users'));
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static('public'));
 
-
-io.on("connection", socket => {
-
-  socket.on("Input Chat Message", msg => {
-
-    connect.then(db => {
-      try {
-          let chat = new Chat({ message: msg.chatMessage, sender:msg.userID, type: msg.type })
-
-          chat.save((err, doc) => {
-            if(err) return res.json({ success: false, err })
-
-            Chat.find({ "_id": doc._id })
-            .populate("sender")
-            .exec((err, doc)=> {
-
-                return io.emit("Output Chat Message", doc);
-            })
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    })
-   })
-
-})
+// Setup app to use sessions to keep track of user's login status.
+app.use(passport.initialize());
+app.use(passport.session());
 
 
-//use this to show the image you have in node js server to client (react js)
-//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
-app.use('/uploads', express.static('uploads'));
+io.on('connection', (socket) => {
+  socket.on('join', ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
+    if(error) return callback(error);
 
-  // Set static folder
-  app.use(express.static("client/build"));
+    socket.join(user.room);
 
-  // index.html for all page routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+    callback();
   });
-}
 
-const port = process.env.PORT || 5000
+  socket.on('sendMessage', (message, callback) => {
+    const user = getUser(socket.id);
 
-server.listen(port, () => {
-  console.log(`Server Running at ${port}`)
+    io.to(user.room).emit('message', { user: user.name, text: message });
+
+    callback();
+  });
+
+  socket.on('disconnect', () => {
+    const user = removeUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  })
+});
+
+
+
+const PORT = process.env.PORT || 5000
+
+app.use(require('./routes/users.js'));
+
+server.listen(PORT, () => {
+  console.log(`Server Running at ${PORT}`)
 });
