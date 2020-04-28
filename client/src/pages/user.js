@@ -6,9 +6,7 @@ export default function User() {
  
   return(
     <Container>
-
         <UserProfile/>
-
     </Container>
   )
 };
