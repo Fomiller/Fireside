@@ -4,9 +4,9 @@ const router = express.Router();
 const User = require('../models/user');
 const passport = require('../config/passport');
 
-module.exports = function (app) {
+
   // gets ALL USERS
-  app.get("/api/users", (req, res) => {
+  router.get("/api/users", (req, res) => {
     db.User.find({})
       .then(User => {
         res.json(User);
@@ -17,6 +17,7 @@ module.exports = function (app) {
   });
 
   //Route for registering new user
+
   app.post('/api/users', (req, res) => {
     Users = new User({ 
       email: req.body.email,
@@ -24,7 +25,8 @@ module.exports = function (app) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
      });
-    console.log("test",Users)
+    console.log("NEW USER: ",Users)
+
 
     User.register(Users, req.body.password, function (err, user) {
       if (err) {
@@ -60,7 +62,7 @@ module.exports = function (app) {
   });
 
   // get a single USER by id
-  app.get('/api/users/:id', (req, res) => {
+  router.get('/api/users/:id', (req, res) => {
     db.User.findOne({ _id: req.params.id })
       .then(User => {
         res.json(User)
@@ -71,7 +73,7 @@ module.exports = function (app) {
   });
 
   // Update a USER
-  app.put('/api/users/:id', (req, res) => {
+  router.put('/api/users/:id', (req, res) => {
     db.User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
       .then(User =>
         res.json(User)
@@ -86,7 +88,7 @@ module.exports = function (app) {
 
   // Routes to add and get friends for a user
 
-  // app.get('/api/users/friends', (req, res) => {
+  // router.get('/api/users/friends', (req, res) => {
   //   db.User.find({})
   //   .populate('friends')
   //     .then(dbWorkout => {
@@ -97,7 +99,7 @@ module.exports = function (app) {
   //     });
   // });
 
-  // app.put('/api/addfriend/:id', (req, res) => {
+  // router.put('/api/addfriend/:id', (req, res) => {
   //   db.User.findOneAndUpdate({ _id: req.params.id }, { $push: { friends: req.body } }, { new: true })
   //   .then(User => 
   //     res.json(User)
@@ -108,4 +110,4 @@ module.exports = function (app) {
   //   });
   // });
 
-};
+  module.exports = router;
