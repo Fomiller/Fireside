@@ -24,10 +24,6 @@ app.use(passport.session());
 
 const { Chat } = require("./models/Chat");
 
-// Allow the app to use the api routes
-require('./routes/api-routes.js')(app);
-
-
 io.on("connection", socket => {
 
   socket.on("Input Chat Message", msg => {
@@ -70,7 +66,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
+// Allow the app to use the api routes
+app.use(require('./routes/api-routes.js'));
 
 const PORT = process.env.PORT || 5000
 
