@@ -25,6 +25,13 @@ const UserSchema = new Schema({
     avatar: {
         type: String,
     },
+    friends: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User"
+        }
+      ]
+}, { toJSON: { virtuals: true } 
 });
 
 const User = mongoose.model("User", UserSchema);
