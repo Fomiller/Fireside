@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import { Switch } from '@material-ui/core';
+import { Route, Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
+  return <ListItem button component={Link} {...props} />;
 }
 
 export default function NavbarDrawer(props) {
@@ -140,8 +141,8 @@ export default function NavbarDrawer(props) {
         </div>
         <Divider />
         <List>
-          {['Profile', 'Inbox', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItemLink key={text} href={text}>
+          {['Profile', 'Inbox', 'Send email', 'user/test'].map((text, index) => (
+            <ListItemLink key={text} to={text}>
               <ListItemIcon>{index % 2 === 0 ? <PersonIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItemLink>
