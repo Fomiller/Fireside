@@ -19,8 +19,7 @@ const passport = require('../config/passport');
 
   //Route for registering new user
   router.post('/api/users', (req, res) => {
-    console.log('TEST');
-    Users = new User({ email: req.body.email, username: req.body.username });
+    Users = new User({ email: req.body.email, username: req.body.firstName + ' ' + req.body.lastName });
 
     User.register(Users, req.body.password, function (err, user) {
       if (err) {
