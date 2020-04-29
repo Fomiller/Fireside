@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "yellow !important",
+  }
 }));
 
 export default function SignIn() {
@@ -70,6 +74,11 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline
+              }
+            }}
           />
           <TextField
             variant="outlined"
@@ -81,6 +90,11 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline
+              }
+            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
