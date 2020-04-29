@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -51,7 +51,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [state, setState] = useState({})
   const classes = useStyles();
+
+  const handleChange = (e) => {
+    const name = e.currentTarget.name
+    const value = e.currentTarget.value
+    setState({...state, [name]: value})
+    console.log("Signin: ",state)
+  }
+
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -74,6 +84,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
             InputProps={{
               classes: {
                 notchedOutline: classes.notchedOutline
@@ -90,6 +101,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
             InputProps={{
               classes: {
                 notchedOutline: classes.notchedOutline
