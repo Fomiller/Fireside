@@ -17,7 +17,6 @@ const passport = require('../config/passport');
   });
 
   //Route for registering new user
-
   router.post('/api/users', (req, res) => {
     Users = new User({ 
       email: req.body.email,
@@ -26,7 +25,6 @@ const passport = require('../config/passport');
       lastName: req.body.lastName,
      });
     console.log("NEW USER: ",Users)
-
 
     User.register(Users, req.body.password, function (err, user) {
       if (err) {
@@ -40,20 +38,26 @@ const passport = require('../config/passport');
   // Route for loging in
   router.post('/api/login', (req, res) => {
     if (!req.body.username) {
+      console.log("Username was not given");
       res.json({ success: false, message: "Username was not given" })
     } else {
       if (!req.body.password) {
+        console.log("Password was not given");
         res.json({ success: false, message: "Password was not given" })
       } else {
         passport.authenticate('local', (err, user, info) => {
           if (err) {
+            console.log('ERROR', err);
             res.json({ success: false, message: err })
           } else {
             if (!user) {
+              console.log('username or password incorrect');
               res.json({ success: false, message: 'username or password incorrect' })
             } else {
               //User successfully logged in.
+              console.log('SUCCESS!!!');
               res.json({ success: true })
+              res.redirect('user/username')
             }
           }
         })(req, res);
