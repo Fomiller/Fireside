@@ -37,7 +37,12 @@ function UserRight() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth id="standard-basic" label="First Name" spacing={2}/>
+        <TextField 
+        fullWidth
+        id="standard-basic"
+        label="First Name"
+        spacing={2}
+        />
       </Grid>
       <Grid item xs={12}>
         <TextField fullWidth id="standard-basic" label="Last Name" spacing={2}/>
