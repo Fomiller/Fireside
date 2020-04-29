@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { login } from '../utils/API';
+import { useAppContext } from '../utils/GlobalContext';
+import {Redirect} from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -52,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [state, setState] = useState({})
+  const [global, dispatch] = useAppContext();
+  const [state, setState] = useState({});
   const classes = useStyles();
 
   const handleChange = (e) => {
@@ -61,90 +64,96 @@ export default function SignIn() {
     setState({...state, [name]: value})
     console.log("Signin: ",state)
   }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    login(state)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = await login(state);
     console.log("Working");
+    console.log(user);
+    dispatch({type: "SET_USER", payload:user});
+    console.log(global);
   }
 
 
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="User Name"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            onChange={handleChange}
-            InputProps={{
-              classes: {
-                notchedOutline: classes.notchedOutline
-              }
-            }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-            InputProps={{
-              classes: {
-                notchedOutline: classes.notchedOutline
-              }
-            }}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+  if( global.user ){
+    return <Redirect to={`/user/${global.user.id}`}/>;
+  } else {
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              onChange={handleChange}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleSubmit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    );
+  }
 }
