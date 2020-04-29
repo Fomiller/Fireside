@@ -56,7 +56,7 @@ const passport = require('../config/passport');
             } else {
               //User successfully logged in.
               console.log('SUCCESS!!!');
-              res.json({ success: true })
+              res.json({ success: true, message: 'User has been logged in' })
               res.redirect('/user/username')
             }
           }
