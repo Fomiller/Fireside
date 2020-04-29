@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { login } from '../utils/API';
 
 function Copyright() {
   return (
@@ -60,6 +61,11 @@ export default function SignIn() {
     setState({...state, [name]: value})
     console.log("Signin: ",state)
   }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    login(state)
+    console.log("Working");
+  }
 
 
 
@@ -79,10 +85,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="User Name"
+            name="username"
+            autoComplete="username"
             autoFocus
             onChange={handleChange}
             InputProps={{
@@ -118,6 +124,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
