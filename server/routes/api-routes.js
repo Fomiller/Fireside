@@ -18,7 +18,7 @@ const passport = require('../config/passport');
 
   //Route for registering new user
 
-  app.post('/api/users', (req, res) => {
+  router.post('/api/users', (req, res) => {
     Users = new User({ 
       email: req.body.email,
       username: req.body.username,
@@ -38,7 +38,7 @@ const passport = require('../config/passport');
   });
 
   // Route for loging in
-  app.post('/api/login', (req, res) => {
+  router.post('/api/login', (req, res) => {
     if (!req.body.username) {
       res.json({ success: false, message: "Username was not given" })
     } else {
