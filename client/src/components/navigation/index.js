@@ -125,7 +125,7 @@ export default function NavbarDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Fireside
           </Typography>
         </Toolbar>
       </AppBar>
