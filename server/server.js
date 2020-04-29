@@ -24,30 +24,41 @@ app.use(passport.session());
 
 const { Chat } = require("./models/Chat");
 
-io.on("connection", socket => {
+io.on('connection', (socket) => {
 
-  socket.on("Input Chat Message", msg => {
+  socket.on('join', ({ name, room }, callback) => {
+    console.log(name);
+    const { user } = addUser({ id: socket.id, name, room });
 
-    connect.then(db => {
-      try {
-          let chat = new Chat({ message: msg.chatMessage, sender:msg.userID, type: msg.type })
+    // if(error) return callback(error);
 
-          chat.save((err, doc) => {
-            if(err) return res.json({ success: false, err })
+    socket.join(user.room);
 
-            Chat.find({ "_id": doc._id })
-            .populate("sender")
-            .exec((err, doc)=> {
+    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
-                return io.emit("Output Chat Message", doc);
-            })
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    })
-   })
-})
+    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+    callback();
+  });
+
+  socket.on('sendMessage', (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit('message', { user: user.name, text: message });
+
+    callback();
+  });
+
+  socket.on('disconnect', () => {
+    const user = removeUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  })
+});
 
 // Dont know what this does?
 //use this to show the image you have in node js server to client (react js)
@@ -72,3 +83,30 @@ app.use(require('./routes/api-routes.js'));
 const PORT = process.env.PORT || 5000
 
 server.listen(PORT, () => console.log(`Server Running at ${PORT}`));
+
+
+
+// io.on("connection", socket => {
+
+//   socket.on("Input Chat Message", msg => {
+
+//     connect.then(db => {
+//       try {
+//           let chat = new Chat({ message: msg.chatMessage, sender:msg.userID, type: msg.type })
+
+//           chat.save((err, doc) => {
+//             if(err) return res.json({ success: false, err })
+
+//             Chat.find({ "_id": doc._id })
+//             .populate("sender")
+//             .exec((err, doc)=> {
+
+//                 return io.emit("Output Chat Message", doc);
+//             })
+//           })
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     })
+//    })
+// })
