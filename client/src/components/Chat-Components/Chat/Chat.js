@@ -15,7 +15,7 @@ const Chat = (props) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const ENDPOINT = 'localhost:5000';
-  console.log(props);
+  console.log("PROPS",props);
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)

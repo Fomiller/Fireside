@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import FriendTable from '../friends-list';
 import { Typography } from '@material-ui/core';
+import {useAppContext} from '../../utils/GlobalContext'
+import Join from '../Chat-Components/Join/Join';
 
 
 import Image from 'material-ui-image';
@@ -26,14 +28,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function UserRight() {
+  const [state, dispatch] = useAppContext()
   const classes = useStyles();
+  console.log("USER: ", state);
+
 
   return(
     <Grid container direction="column" justify="space-around" alignItems="stretch" spacing={2}>
       <Grid item xs={12}>
         <Typography variant='h2' component='h2'>
           {/* This should be the user name from state... */}
-          Forrest Miller
+          {state.user.username}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -42,13 +47,26 @@ function UserRight() {
         id="standard-basic"
         label="First Name"
         spacing={2}
+        value={state.user.firstName}
         />
       </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth id="standard-basic" label="Last Name" spacing={2}/>
+        <TextField
+        fullWidth
+        id="standard-basic"
+        label="Last Name"
+        spacing={2}
+        value={state.user.lastName}
+        />
       </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth id="standard-basic" label="Test@gmail.com" spacing={2}/>
+        <TextField
+        fullWidth
+        id="standard-basic"
+        label="Test@gmail.com"
+        spacing={2}
+        value={state.user.email}
+        />
       </Grid>
     </Grid>
   )
@@ -75,7 +93,7 @@ export default function UserProfile() {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <FriendTable/>
+          <Join/>
         </Grid>
       </Grid>
     </div>
