@@ -55,9 +55,9 @@ const passport = require('../config/passport');
               res.json({ success: false, message: 'username or password incorrect' })
             } else {
               //User successfully logged in.
+              // res.json({ success: true, message: 'User has been logged in' })              
               console.log('SUCCESS!!!');
-              res.json({ success: true, message: 'User has been logged in' })
-              res.redirect('/user/username')
+              return res.send({username: req.body.username})
             }
           }
         })(req, res);
