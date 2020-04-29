@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const passport = require('./config/passport');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 // Socket.io setup
 const http = require('http');
