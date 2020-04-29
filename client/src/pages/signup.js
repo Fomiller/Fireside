@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "yellow !important",
+  }
 }));
 
 export default function SignUp() {
@@ -87,6 +91,11 @@ export default function SignUp() {
                 name="username"
                 autoComplete="username"
                 onChange={handleChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -100,6 +109,11 @@ export default function SignUp() {
                 label="First Name"
                 autoFocus
                 onChange={handleChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -112,6 +126,11 @@ export default function SignUp() {
                 name="lastName"
                 autoComplete="lname"
                 onChange={handleChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -124,6 +143,11 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -137,6 +161,11 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
                 onChange={handleChange}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
           </Grid>

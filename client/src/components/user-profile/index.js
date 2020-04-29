@@ -37,7 +37,12 @@ function UserRight() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth id="standard-basic" label="First Name" spacing={2}/>
+        <TextField 
+        fullWidth
+        id="standard-basic"
+        label="First Name"
+        spacing={2}
+        />
       </Grid>
       <Grid item xs={12}>
         <TextField fullWidth id="standard-basic" label="Last Name" spacing={2}/>
@@ -63,6 +68,7 @@ export default function UserProfile() {
         </Grid>
         <Grid item xs={12} md={6}>
           <UserRight/>
+          {/* The friends list could go here to make a more compact design */}
         </Grid>
         <Grid item xs={3}>
         </Grid>

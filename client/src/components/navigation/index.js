@@ -18,7 +18,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
-import { Switch } from '@material-ui/core';
 import { Route, Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -61,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    color: theme.palette.common.white
   },
   content: {
     flexGrow: 1,
@@ -78,6 +78,12 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  iconColor: {
+    color: "yellow",
+  },
+  dividerColor: {
+    backgroundColor: "yellow",
+  }
 }));
 
 function ListItemLink(props) {
@@ -85,12 +91,11 @@ function ListItemLink(props) {
 }
 
 export default function NavbarDrawer(props) {
-  const {toggle} = props;
 
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  console.log(theme);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -120,9 +125,8 @@ export default function NavbarDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Fireside
           </Typography>
-          <Switch onChange={() => toggle()}/>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -136,23 +140,23 @@ export default function NavbarDrawer(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon classes={{root: classes.iconColor}}/> : <ChevronRightIcon  color={theme.palette.common.white}/>}
           </IconButton>
         </div>
-        <Divider />
+        <Divider classes={{root: classes.dividerColor}}/>
         <List>
           {['Profile', 'Inbox', 'Send email', 'user/test'].map((text, index) => (
             <ListItemLink key={text} to={text}>
-              <ListItemIcon>{index % 2 === 0 ? <PersonIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <PersonIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItemLink>
           ))}
         </List>
-        <Divider />
+        <Divider classes={{root: classes.dividerColor}}/>
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
