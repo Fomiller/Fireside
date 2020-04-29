@@ -6,30 +6,15 @@ import StickyFooter from './components/footer';
 import NavbarDrawer from './components/navigation';
 import { AppProvider } from './utils/GlobalContext';
 import { Paper, createMuiTheme } from "@material-ui/core";
+import {SynthWaveTheme} from './utils/theme';
 
 
 function App() {
-  const [theme, setTheme] = useState({
-    palette: {
-      type:'light',
-    }
-  })
-
-  const toggleTheme = () => {
-    let newTheme = theme.palette.type === 'light' ? 'dark' : 'light';
-    setTheme({
-      palette: {
-        type: newTheme
-      }
-    });
-  };
-  
-  const muiTheme = createMuiTheme(theme);
   
   return (
     <AppProvider>
-      <ThemeProvider theme={muiTheme}>
-        <Paper>
+      <ThemeProvider theme={SynthWaveTheme}>
+        <Paper square="true">
         <Router>
           <Switch>
             <Route exact path='/signin'>
@@ -39,15 +24,15 @@ function App() {
               <SignUp/>
             </Route>
             <Route exact path={['/','/home']}>
-              <NavbarDrawer toggle={toggleTheme}/>
+              <NavbarDrawer/>
               <Home/>
             </Route>
             <Route exact path='/profile'>
-              <NavbarDrawer toggle={toggleTheme}/>
+              <NavbarDrawer/>
               <Profile/>
             </Route>
             <Route exact path='/user/:id'>
-              <NavbarDrawer toggle={toggleTheme}/>
+              <NavbarDrawer/>
               <User/>
             </Route>
             <Route exact path='*'>
