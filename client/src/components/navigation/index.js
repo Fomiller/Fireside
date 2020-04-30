@@ -146,17 +146,12 @@ export default function NavbarDrawer(props) {
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-            <ListItemLink key="Profile" to={`/user/${state.user.id}`}>
-              <ListItemIcon>
-                <PersonIcon color="secondary"/>
-              </ListItemIcon>
-              <ListItemText primary="Profile"/>
-            </ListItemLink>
-            {/* <ListItemLink key={text} to={text}>
-              <ListItemIcon>{index % 2 === 0 ? <PersonIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemLink> */}
-
+          <ListItemLink key="Profile" to={`/user/${state.user._id}`}>
+            <ListItemIcon>
+              <PersonIcon color="secondary"/>
+            </ListItemIcon>
+            <ListItemText primary="Profile"/>
+          </ListItemLink>
         </List>
         <Divider classes={{root: classes.dividerColor}}/>
       </Drawer>

@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
+  avatarImg: {
+    maxWidth: '360px',
+    width: '100%',
+    textAlign: 'center'
+  } 
 }));
 
 function UserRight() {
@@ -76,22 +81,18 @@ export default function UserProfile() {
   } else {
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
-            <img width="100%"src={state.user.avatar}/>
-          </Paper>
+      <Paper>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <img className={classes.avatarImg} max src={state.user.avatar}/>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <UserRight/>
+          </Grid>
+          <Grid item xs={3}>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <UserRight/>
-        </Grid>
-        <Grid item xs={3}>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-        </Grid>
-      </Grid>
+      </Paper>
     </div>
   );
   }
