@@ -21,24 +21,20 @@ function App() {
             <Route exact path='/signin'>
                 <SignIn/>
             </Route>
-            <Route exact path='/signup'>
+            <Route exact path={['/signup','/','/home']}>
               <SignUp/>
             </Route>
-            <Route exact path={['/','/home']}>
+            {/* <Route exact path={['/','/home']}>
               <NavbarDrawer/>
               <Home/>
-            </Route>
-            <Route exact path='/profile'>
-              <NavbarDrawer/>
-              <Profile/>
-            </Route>
+            </Route> */}
             <Route exact path='/user/:id'>
               <NavbarDrawer/>
               <User/>
             </Route>
             <Route exact path='/chat' component={Chat}/>
             <Route exact path='*'>
-            <NoMatch/>
+              <NoMatch/>
             </Route>
           </Switch>
           <StickyFooter/>
