@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { login } from '../utils/API';
+import { login, getLoggedInUser } from '../utils/API';
 import { useAppContext } from '../utils/GlobalContext';
 import {Redirect} from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -65,6 +65,15 @@ export default function SignIn() {
   const [state, setState] = useState({});
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (!global.user) {
+      (async () => {
+        const loggedInUser = await getLoggedInUser();
+        dispatch({type: "SET_USER", payload:loggedInUser});
+      })();
+    }
+  },[]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
