@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,6 +20,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import { Route, Link } from 'react-router-dom';
 import { useAppContext } from '../../utils/GlobalContext';
+import {Redirect} from 'react-router-dom';
+import { getLoggedInUser } from '../../utils/API';
 
 const drawerWidth = 240;
 
@@ -106,6 +108,23 @@ export default function NavbarDrawer(props) {
     setOpen(false);
   };
 
+
+  useEffect(() => {
+    if (!state.user) {
+      (async () => {
+        const loggedInUser = await getLoggedInUser();
+        dispatch({type: "SET_USER", payload:loggedInUser});
+      })(); 
+    }
+  },[]);
+
+  if(state.loggedIn && !state.user) {
+    return <Redirect to='/signin'/>
+
+  } else if (!state.loggedIn) {
+    return <h1>Loading</h1>;
+
+  } else {
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -164,4 +183,5 @@ export default function NavbarDrawer(props) {
       </main>
     </div>
   );
+  }
 }
