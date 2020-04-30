@@ -65,7 +65,6 @@ export default function SignUp() {
   const classes = useStyles();
   const [state, setState] = useState({avatar: avatars[ranNum], redirect:false})
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState({});
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
