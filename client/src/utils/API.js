@@ -1,8 +1,14 @@
 import axios from 'axios';
 
 
-export const createUser = (data) => {
-  axios.post('/api/users', data)
+export const createUser = async (data) => {
+  try {
+    const res = await axios.post('/api/users', data)
+    return res
+  }
+  catch (err) {
+    console.log("User Creation: ", err)
+  }
 }
 
 export const login = async (data) => {

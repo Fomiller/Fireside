@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {createUser} from '../utils/API';
+import { Redirect } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -52,9 +53,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const [state, setState] = useState({})
-
+  const avatars = ["./avatars/avatar_01.png","./avatars/avatar_02.png","./avatars/avatar_03.png","./avatars/avatar_04.png","./avatars/avatar_05.png"];
+  const ranNum = Math.floor(Math.random() * 5)
   const classes = useStyles();
+
+  const [state, setState] = useState({avatar: avatars[ranNum], redirect:false})
 
   const handleChange = (e) => {
     const name = e.currentTarget.name
@@ -62,13 +65,21 @@ export default function SignUp() {
     setState({...state, [name]: value})
     console.log(state)
   }
-
-  const handleUserSubmit = (e) => {
+  
+  const handleUserSubmit = async (e) => {
     e.preventDefault()
     console.log("NEW USER STATE",state)
-    createUser(state);
+    const user = await createUser(state);
+    if (user.data.success === true) {
+      setState({...state, redirect: true})
+    } else {
+      console.log("OOPS");
+    }
   }
 
+  if(state.redirect === true) {
+    return <Redirect to='/signin'/>
+  } else {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -193,4 +204,5 @@ export default function SignUp() {
       </Box>
     </Container>
   );
+  }
 }
