@@ -95,7 +95,6 @@ export default function NavbarDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  console.log(theme);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
