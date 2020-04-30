@@ -15,12 +15,19 @@ import Container from '@material-ui/core/Container';
 import { login } from '../utils/API';
 import { useAppContext } from '../utils/GlobalContext';
 import {Redirect} from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="/signup">
         Fireside
       </Link>{' '}
       {new Date().getFullYear()}
@@ -56,7 +63,15 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const [global, dispatch] = useAppContext();
   const [state, setState] = useState({});
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleChange = (e) => {
     const name = e.currentTarget.name
@@ -67,10 +82,11 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = await login(state);
-    console.log("Working");
-    console.log(user);
+    if(user === undefined) {
+      setOpen(true)
+    }
+    console.log(user)
     dispatch({type: "SET_USER", payload:user});
-    console.log(global);
   }
 
 
@@ -122,10 +138,6 @@ export default function SignIn() {
                 }
               }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -136,12 +148,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -153,6 +160,16 @@ export default function SignIn() {
         <Box mt={8}>
           <Copyright />
         </Box>
+        <div className={classes.root}>
+          {/* <Button variant="outlined" onClick={handleClick}>
+            Open success snackbar
+          </Button> */}
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              Please check your user name and password.
+            </Alert>
+          </Snackbar>
+        </div>
       </Container>
     );
   }
