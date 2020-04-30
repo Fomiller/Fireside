@@ -4,10 +4,12 @@ import axios from 'axios';
 export const createUser = async (data) => {
   try {
     const res = await axios.post('/api/users', data)
-    return res
+    if (res.status === 200 && window){ 
+      return res;
+    }
   }
   catch (err) {
-    console.log("User Creation: ", err)
+    return err
   }
 }
 
