@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const passport = require('./config/passport');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 // Socket.io setup
 const http = require('http');
@@ -21,39 +22,45 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 const { Chat } = require("./models/Chat");
 
+// Run when client connects.
 io.on('connection', (socket) => {
 
+  // Run when client joins a room.
   socket.on('join', ({ name, room }, callback) => {
-    console.log(name);
+    // Returns a user object with name and room.
     const { user } = addUser({ id: socket.id, name, room });
 
-    // if(error) return callback(error);
-
+    // Adds user to room.
     socket.join(user.room);
 
+    // Sends message to user after user joins room.
     socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
+    // Sends message to all users in room indicating a new user has joined.
     socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
-
+    // Returns all users in the room.
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
-
+    // does not do anything yet.
     callback();
   });
 
+  // Runs when client sends a message.
   socket.on('sendMessage', (message, callback) => {
+    // Gets user by socket id
     const user = getUser(socket.id);
-
+    // Sends message to room from user.
     io.to(user.room).emit('message', { user: user.name, text: message });
-
+    // Runs function on client side to setMessage state.
     callback();
   });
 
+  // When user disconnects remove from room.
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
 
     if(user) {
+      // Send message to room that user has left.
       io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
     }

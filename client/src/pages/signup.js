@@ -13,6 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {createUser} from '../utils/API';
+import { Redirect } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Copyright() {
   return (
@@ -52,9 +60,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const [state, setState] = useState({})
-
+  const avatars = ["/avatars/avatar_01.png","/avatars/avatar_02.png","/avatars/avatar_03.png","/avatars/avatar_04.png","/avatars/avatar_05.png"];
+  const ranNum = Math.floor(Math.random() * 5)
   const classes = useStyles();
+  const [state, setState] = useState({avatar: avatars[ranNum], redirect:false})
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleChange = (e) => {
     const name = e.currentTarget.name
@@ -62,13 +79,24 @@ export default function SignUp() {
     setState({...state, [name]: value})
     console.log(state)
   }
-
-  const handleUserSubmit = (e) => {
+  
+  const handleUserSubmit = async (e) => {
     e.preventDefault()
     console.log("NEW USER STATE",state)
-    createUser(state);
+    const user = await createUser(state);
+    console.log(user);
+    if(!user.data) {
+      setOpen(true);
+      return
+    }
+    if (user.data.success === true) {
+      setState({...state, redirect: true})
+    }
   }
 
+  if(state.redirect === true) {
+    return <Redirect to='/signin'/>
+  } else {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -191,6 +219,17 @@ export default function SignUp() {
       <Box mt={5}>
         <Copyright />
       </Box>
+      <div className={classes.root}>
+      {/* <Button variant="outlined" onClick={handleClick}>
+        Open success snackbar
+      </Button> */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          Please make sure to fill out the signup form completely.
+        </Alert>
+      </Snackbar>
+    </div>
     </Container>
   );
+  }
 }
