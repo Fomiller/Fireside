@@ -1,7 +1,8 @@
 import React, {useContext, createContext, useReducer} from 'react';
 
-
-const AppContext = createContext()
+const AppContext = createContext({
+  loggedIn:false
+})
 const { Provider } = AppContext;
 
 const reducer = (state, action) => {
@@ -9,7 +10,8 @@ const reducer = (state, action) => {
     case "SET_USER":
       return{
         ...state,
-        user: action.payload
+        user: action.payload,
+        loggedIn: true,
       };
     default:
       return state;
