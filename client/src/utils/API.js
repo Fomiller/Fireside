@@ -26,3 +26,16 @@ export const login = async (data) => {
       
     }
 }
+
+export const getLoggedInUser = async () => {
+  try{
+    const res = await axios.get('/api/loggedinuser');
+    if (res.data) {
+      return res.data;
+    }
+    return null;
+  }
+  catch(err){
+    console.log("GET LOGGED IN USER: ",err)
+  }
+}
