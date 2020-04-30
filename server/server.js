@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const passport = require('./config/passport');
+const session = require('express-session');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 // Socket.io setup
@@ -17,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/firesideDB", { 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(session({ secret: 'keyboard cat', resave: false }));
 // Setup app to use sessions to keep track of user's login status.
 app.use(passport.initialize());
 app.use(passport.session());

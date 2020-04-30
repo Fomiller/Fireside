@@ -41,6 +41,14 @@ const passport = require('../config/passport');
     }
   });
 
+  router.get('/api/loggedinuser', (req,res) => {
+    console.log("SERVER",req.user);
+    if (req.user) {
+      return res.send(req.user);
+    }
+    return res.send(null);
+  });
+
   // get a single USER by id
   router.get('/api/users/:id', (req, res) => {
     db.User.findOne({ _id: req.params.id })
