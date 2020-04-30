@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
+  avatarImg: {
+    maxWidth: '360px',
+    width: '100%',
+    textAlign: 'center'
+  } 
 }));
 
 function UserRight() {
@@ -37,31 +42,14 @@ function UserRight() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField 
-        fullWidth
-        id="standard-basic"
-        label="First Name"
-        spacing={2}
-        value={state.user.firstName}
-        />
+      <Typography variant='h5' component='h2'>
+          { `${state.user.firstName} ${state.user.lastName}` }
+        </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField
-        fullWidth
-        id="standard-basic"
-        label="Last Name"
-        spacing={2}
-        value={state.user.lastName}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-        fullWidth
-        id="standard-basic"
-        label="Test@gmail.com"
-        spacing={2}
-        value={state.user.email}
-        />
+      <Typography variant='h5' component='h2'>
+          {state.user.email}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Join/>
@@ -93,22 +81,18 @@ export default function UserProfile() {
   } else {
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
-            <img width="100%"src={state.user.avatar}/>
-          </Paper>
+      <Paper>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <img className={classes.avatarImg} max src={state.user.avatar}/>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <UserRight/>
+          </Grid>
+          <Grid item xs={3}>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <UserRight/>
-        </Grid>
-        <Grid item xs={3}>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-        </Grid>
-      </Grid>
+      </Paper>
     </div>
   );
   }
