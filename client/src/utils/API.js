@@ -23,5 +23,6 @@ export const login = async (data) => {
     }
     catch (err) {
       console.log("LOGIN CLIENT SIDE ERROR: ", err)
+      
     }
 }
