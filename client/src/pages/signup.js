@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const avatars = ["./avatars/avatar_01.png","./avatars/avatar_02.png","./avatars/avatar_03.png","./avatars/avatar_04.png","./avatars/avatar_05.png"];
+  const avatars = ["/avatars/avatar_01.png","/avatars/avatar_02.png","/avatars/avatar_03.png","/avatars/avatar_04.png","/avatars/avatar_05.png"];
   const ranNum = Math.floor(Math.random() * 5)
   const classes = useStyles();
   const [state, setState] = useState({avatar: avatars[ranNum], redirect:false})

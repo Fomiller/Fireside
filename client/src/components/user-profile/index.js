@@ -3,13 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
-import FriendTable from '../friends-list';
 import { Typography } from '@material-ui/core';
 import {useAppContext} from '../../utils/GlobalContext'
-import Join from '../Chat-Components/Join/Join';
-
-
-import Image from 'material-ui-image';
+import Join from '../join';
+import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,14 +27,11 @@ const useStyles = makeStyles((theme) => ({
 function UserRight() {
   const [state, dispatch] = useAppContext()
   const classes = useStyles();
-  console.log("USER: ", state);
-
 
   return(
     <Grid container direction="column" justify="space-around" alignItems="stretch" spacing={2}>
       <Grid item xs={12}>
         <Typography variant='h2' component='h2'>
-          {/* This should be the user name from state... */}
           {state.user.username}
         </Typography>
       </Grid>
@@ -68,6 +62,9 @@ function UserRight() {
         value={state.user.email}
         />
       </Grid>
+      <Grid item xs={12}>
+        <Join/>
+      </Grid>
     </Grid>
   )
 }
@@ -75,27 +72,31 @@ function UserRight() {
 
 export default function UserProfile() {
   const classes = useStyles();
+  const [state, dispatch] = useAppContext()
 
+  if(!state.user) {
+    return <Redirect to='/signin'/>
+  } else {
   return (
     <div className={classes.root}>
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Paper className={classes.paper}>
-            <Image src="https://i.picsum.photos/id/958/200/200.jpg"/>
+            <img width="100%"src={state.user.avatar}/>
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <UserRight/>
-          {/* The friends list could go here to make a more compact design */}
         </Grid>
         <Grid item xs={3}>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Join/>
         </Grid>
       </Grid>
     </div>
   );
+  }
 }
