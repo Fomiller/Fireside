@@ -37,31 +37,14 @@ function UserRight() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField 
-        fullWidth
-        id="standard-basic"
-        label="First Name"
-        spacing={2}
-        value={state.user.firstName}
-        />
+      <Typography variant='h5' component='h2'>
+          { `${state.user.firstName} ${state.user.lastName}` }
+        </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TextField
-        fullWidth
-        id="standard-basic"
-        label="Last Name"
-        spacing={2}
-        value={state.user.lastName}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-        fullWidth
-        id="standard-basic"
-        label="Test@gmail.com"
-        spacing={2}
-        value={state.user.email}
-        />
+      <Typography variant='h5' component='h2'>
+          {state.user.email}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Join/>
