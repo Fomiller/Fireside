@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import { Route, Link } from 'react-router-dom';
+import { useAppContext } from '../../utils/GlobalContext';
 
 const drawerWidth = 240;
 
@@ -91,10 +92,12 @@ function ListItemLink(props) {
 }
 
 export default function NavbarDrawer(props) {
-
   const classes = useStyles();
   const theme = useTheme();
+  const [state, dispatch] = useAppContext();
   const [open, setOpen] = React.useState(false);
+  console.log("STATE: ",state);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -102,7 +105,6 @@ export default function NavbarDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div className={classes.root}>
@@ -144,22 +146,19 @@ export default function NavbarDrawer(props) {
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-          {['Profile', 'Inbox', 'Send email', 'user/test'].map((text, index) => (
-            <ListItemLink key={text} to={text}>
+            <ListItemLink key="Profile" to={`/user/${state.user.id}`}>
+              <ListItemIcon>
+                <PersonIcon color="secondary"/>
+              </ListItemIcon>
+              <ListItemText primary="Profile"/>
+            </ListItemLink>
+            {/* <ListItemLink key={text} to={text}>
               <ListItemIcon>{index % 2 === 0 ? <PersonIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
               <ListItemText primary={text} />
-            </ListItemLink>
-          ))}
+            </ListItemLink> */}
+
         </List>
         <Divider classes={{root: classes.dividerColor}}/>
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
