@@ -119,7 +119,7 @@ export default function NavbarDrawer(props) {
   },[]);
 
   if(state.loggedIn && !state.user) {
-    return <Redirect to='/signin'/>
+    return <Redirect to={process.env.PUBLIC_URL + '/signin'}/>
 
   } else if (!state.loggedIn) {
     return <h1>Loading</h1>;
@@ -165,7 +165,7 @@ export default function NavbarDrawer(props) {
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-          <ListItemLink key="Profile" to={`/user/${state.user._id}`}>
+          <ListItemLink key="Profile" to={process.env.PUBLIC_URL + `/user/${state.user._id}`}>
             <ListItemIcon>
               <PersonIcon color="secondary"/>
             </ListItemIcon>

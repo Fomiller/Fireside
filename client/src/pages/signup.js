@@ -26,7 +26,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href={process.env.PUBLIC_URL + "/signup"}>
         Fireside
       </Link>{' '}
       {new Date().getFullYear()}
@@ -95,7 +95,7 @@ export default function SignUp() {
   }
 
   if(state.redirect === true) {
-    return <Redirect to='/signin'/>
+    return <Redirect to={process.env.PUBLIC_URL + '/signin'}/>
   } else {
   return (
     <Container component="main" maxWidth="xs">
@@ -209,7 +209,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link href={process.env.PUBLIC_URL + "/signin"} variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
