@@ -29,8 +29,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-
-
 // Run when client connects.
 io.on('connection', (socket) => {
 
@@ -73,7 +71,7 @@ io.on('connection', (socket) => {
 
     if (user) {
       // Send message to room that user has left.
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
     }
   })
