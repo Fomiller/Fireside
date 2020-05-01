@@ -5,17 +5,19 @@ import './Chat.css';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
+import { useAppContext } from '../../../utils/GlobalContext';
+import { getMessages, getLoggedInUser } from '../../../utils/API';
 
 let socket;
 
 const Chat = (props) => {
-  const {location} = props;
+  const { location } = props;
+  const [state, dispatch] = useAppContext();
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const ENDPOINT = 'localhost:5000';
-  console.log("PROPS",props);
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)
@@ -24,8 +26,7 @@ const Chat = (props) => {
 
     setName(name);
     setRoom(room);
-
-    socket.emit('join', { name, room }, () => {
+    socket.emit('join', { name, room: room }, () => {
 
     });
 
@@ -35,20 +36,37 @@ const Chat = (props) => {
     }
   }, [ENDPOINT, location.search]);
 
+  useEffect(() => {
+    if (!state.user) {
+      (async () => {
+        const loggedInUser = await getLoggedInUser();
+        dispatch({ type: "SET_USER", payload: loggedInUser });
+      })();
+    }    
+  }, []);
 
+  useEffect(() => {
+    if (state.loggedIn) {   
+      (async () => {
+        const allMessages = await getMessages(room);
+        const messageArray =[]
+        allMessages.forEach((m) => {
+          messageArray.push({ text: m.message, user: m.sender})
+        })
+        dispatch({ type: "SET_MESSAGES", payload: messageArray });
+        setMessages(messages => [...messages, ...messageArray]);
+      })();
+    }
+  }, [state.loggedIn]);
 
   useEffect(() => {
     socket.on("message", message => {
       setMessages(messages => [...messages, message]);
     });
-    // socket.on("roomData", ({ users }) => {
-    //   setUsers(users);
-    // });
   }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-
     if (message) {
       socket.emit('sendMessage', message, () => setMessage(''));
     }
