@@ -7,7 +7,6 @@ import {useAppContext} from '../utils/GlobalContext';
 export default function Home() {
   return(
     <Container>
-      <img src="./avatars/avatar_01.png"/>
       <Typography variant='h1'>
         HOME PAGE
       </Typography>

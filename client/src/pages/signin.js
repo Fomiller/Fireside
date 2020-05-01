@@ -27,7 +27,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="/signup">
+      <Link color="inherit" href={process.env.PUBLIC_URL + "/signup"}>
         Fireside
       </Link>{' '}
       {new Date().getFullYear()}
@@ -100,7 +100,7 @@ export default function SignIn() {
 
 
   if( global.user ){
-    return <Redirect to={`/user/${global.user.id}`}/>;
+    return <Redirect to={process.env.PUBLIC_URL + `/user/${global.user.id}`}/>;
   } else {
     return (
       <Container component="main" maxWidth="xs">
@@ -159,7 +159,7 @@ export default function SignIn() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link href={process.env.PUBLIC_URL + "/signup"} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -74,7 +74,7 @@ export default function UserProfile() {
   },[]);
 
   if(state.loggedIn && !state.user) {
-    return <Redirect to='/signin'/>
+    return <Redirect to={process.env.PUBLIC_URL + '/signin'}/>
 
   } else if (!state.loggedIn) {
     return <h1>Loading</h1>;
@@ -85,7 +85,7 @@ export default function UserProfile() {
       <Paper elevation={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <img className={classes.avatarImg} max src={state.user.avatar}/>
+            <img className={classes.avatarImg} max src={process.env.PUBLIC_URL + `${state.user.avatar}`}/>
           </Grid>
           <Grid item xs={12} md={6}>
             <UserRight/>
