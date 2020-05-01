@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 const passport = require('./config/passport');
 const session = require('express-session');
 const db = require('./models');
@@ -23,6 +24,18 @@ app.use(express.json());
 app.use(session({ secret: 'keyboard cat', resave: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+if (process.env.NODE_ENV === 'production') {
+  // Exprees will serve up production assets
+  app.use(express.static('client/build'));
+
+  // Express serve up index.html file if it doesn't recognize route
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+
 
 // Run when client connects.
 io.on('connection', (socket) => {
