@@ -14,7 +14,7 @@ const io = socketio(server);
 const mongoose = require("mongoose");
 
 // Connecting to mongoose.
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/firesideDB", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://Fomiller:Fomiller527996@ds035965.mlab.com:35965/heroku_spjxjjl5", { useNewUrlParser: true });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
