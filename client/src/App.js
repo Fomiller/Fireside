@@ -20,9 +20,11 @@ function App() {
           <Switch>
             <Route exact path={process.env.PUBLIC_URL + '/signin'}>
                 <SignIn/>
+                <StickyFooter/>
             </Route>
             <Route exact path={[process.env.PUBLIC_URL + '/signup', process.env.PUBLIC_URL + '/',process.env.PUBLIC_URL + '/home']}>
               <SignUp/>
+              <StickyFooter/>
             </Route>
             {/* <Route exact path={['/','/home']}>
               <NavbarDrawer/>
@@ -31,13 +33,13 @@ function App() {
             <Route exact path={process.env.PUBLIC_URL + '/user/:id'}>
               <NavbarDrawer/>
               <User/>
+              <StickyFooter/>
             </Route>
             <Route exact path={process.env.PUBLIC_URL + '/chat'} component={Chat}/>
             <Route exact path={process.env.PUBLIC_URL + '*'}>
               <NoMatch/>
             </Route>
           </Switch>
-          <StickyFooter/>
         </Router>
         </Paper>
       </ThemeProvider>

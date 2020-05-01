@@ -16,6 +16,7 @@ import {createUser} from '../utils/API';
 import { Redirect } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import './pages.css'
 
 
 function Alert(props) {
