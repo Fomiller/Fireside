@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -19,6 +19,9 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import { Route, Link } from 'react-router-dom';
+import { useAppContext } from '../../utils/GlobalContext';
+import {Redirect} from 'react-router-dom';
+import { getLoggedInUser } from '../../utils/API';
 
 const drawerWidth = 240;
 
@@ -91,10 +94,12 @@ function ListItemLink(props) {
 }
 
 export default function NavbarDrawer(props) {
-
   const classes = useStyles();
   const theme = useTheme();
+  const [state, dispatch] = useAppContext();
   const [open, setOpen] = React.useState(false);
+  console.log("STATE: ",state);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -104,6 +109,22 @@ export default function NavbarDrawer(props) {
   };
 
 
+  useEffect(() => {
+    if (!state.user) {
+      (async () => {
+        const loggedInUser = await getLoggedInUser();
+        dispatch({type: "SET_USER", payload:loggedInUser});
+      })(); 
+    }
+  },[]);
+
+  if(state.loggedIn && !state.user) {
+    return <Redirect to='/signin'/>
+
+  } else if (!state.loggedIn) {
+    return <h1>Loading</h1>;
+
+  } else {
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -144,22 +165,14 @@ export default function NavbarDrawer(props) {
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-          {['Profile', 'Inbox', 'Send email', 'user/test'].map((text, index) => (
-            <ListItemLink key={text} to={text}>
-              <ListItemIcon>{index % 2 === 0 ? <PersonIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemLink>
-          ))}
+          <ListItemLink key="Profile" to={`/user/${state.user._id}`}>
+            <ListItemIcon>
+              <PersonIcon color="secondary"/>
+            </ListItemIcon>
+            <ListItemText primary="Profile"/>
+          </ListItemLink>
         </List>
         <Divider classes={{root: classes.dividerColor}}/>
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon color="secondary"/> : <MailIcon color="secondary"/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -170,4 +183,5 @@ export default function NavbarDrawer(props) {
       </main>
     </div>
   );
+  }
 }

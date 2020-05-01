@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   roomInput: {
     marginBottom: '50px',
+  },
+  joinBtn: {
+    borderWidth: '1px',
   }
 }));
 
