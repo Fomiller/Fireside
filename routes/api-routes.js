@@ -82,7 +82,7 @@ router.get('/api/messages/:room?', (req, res) => {
 });
 
 // Express serve up index.html file if it doesn't recognize route
-app.get('*', (req, res) => {
+router.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
