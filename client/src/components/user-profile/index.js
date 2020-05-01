@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
   avatarImg: {
     maxWidth: '360px',
     width: '100%',
-    textAlign: 'center'
+    margin: 'auto',
+    display: 'block'
   } 
 }));
 
@@ -81,7 +82,7 @@ export default function UserProfile() {
   } else {
   return (
     <div className={classes.root}>
-      <Paper>
+      <Paper elevation={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <img className={classes.avatarImg} max src={state.user.avatar}/>
