@@ -18,22 +18,22 @@ function App() {
         <Paper square="true">
         <Router>
           <Switch>
-            <Route exact path='/signin'>
+            <Route exact path={process.env.PUBLIC_URL + '/signin'}>
                 <SignIn/>
             </Route>
-            <Route exact path={['/signup','/','/home']}>
+            <Route exact path={[process.env.PUBLIC_URL + '/signup', process.env.PUBLIC_URL + '/',process.env.PUBLIC_URL + '/home']}>
               <SignUp/>
             </Route>
             {/* <Route exact path={['/','/home']}>
               <NavbarDrawer/>
               <Home/>
             </Route> */}
-            <Route exact path='/user/:id'>
+            <Route exact path={process.env.PUBLIC_URL + '/user/:id'}>
               <NavbarDrawer/>
               <User/>
             </Route>
-            <Route exact path='/chat' component={Chat}/>
-            <Route exact path='*'>
+            <Route exact path={process.env.PUBLIC_URL + '/chat'} component={Chat}/>
+            <Route exact path={process.env.PUBLIC_URL + '*'}>
               <NoMatch/>
             </Route>
           </Switch>
