@@ -18,7 +18,7 @@ const Chat = (props) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   // const ENDPOINT = 'localhost:5000';
-  const ENDPOINT = process.env.PORT || 5000
+  const ENDPOINT = process.env.PUBLIC_URL || 'localhost:5000';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)
