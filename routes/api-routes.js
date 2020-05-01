@@ -1,5 +1,6 @@
 const db = require('../models');
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const User = require('../models/user');
 const passport = require('../config/passport');

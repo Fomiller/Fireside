@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const path = require('path');
 const passport = require('./config/passport');
 const session = require('express-session');
 const db = require('./models');
