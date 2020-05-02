@@ -22,13 +22,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     // justifyContent: 'center',
-    minHeight: '100vh',
+    // minHeight: '50vh',
   },
   main: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(2),
   },
   footer: {
+    position: 'fixed',
+    bottom: '0',
+    width: '100%',
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
     backgroundColor:

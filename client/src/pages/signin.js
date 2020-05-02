@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import MaterialLink from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -17,6 +17,7 @@ import { useAppContext } from '../utils/GlobalContext';
 import {Redirect} from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {Link} from 'react-router-dom';
 
 
 function Alert(props) {
@@ -61,19 +62,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [global, dispatch] = useAppContext();
-  const [state, setState] = useState({});
+  const [state, dispatch] = useAppContext();
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
-  useEffect(() => {
-    if (!global.user) {
-      (async () => {
-        const loggedInUser = await getLoggedInUser();
-        dispatch({type: "SET_USER", payload:loggedInUser});
-      })();
-    }
-  },[]);
+  const CustomLink = (props) => <Link to={process.env.PUBLIC_URL + "/signup"} {...props} />
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -82,15 +77,11 @@ export default function SignIn() {
     setOpen(false);
   };
 
-  const handleChange = (e) => {
-    const name = e.currentTarget.name
-    const value = e.currentTarget.value
-    setState({...state, [name]: value})
-    console.log("Signin: ",state)
-  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await login(state);
+    const user = await login({username: usernameRef.current.value, password: passwordRef.current.value});
+    usernameRef.current.value = '';
+    passwordRef.current.value = '';
     if(user === undefined) {
       setOpen(true)
     }
@@ -99,8 +90,8 @@ export default function SignIn() {
   }
 
 
-  if( global.user ){
-    return <Redirect to={process.env.PUBLIC_URL + `/user/${global.user.id}`}/>;
+  if( state.user ){
+    return <Redirect to={process.env.PUBLIC_URL + `/user/${state.user.id}`}/>;
   } else {
     return (
       <Container component="main" maxWidth="xs">
@@ -114,6 +105,7 @@ export default function SignIn() {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              inputRef={usernameRef}
               variant="outlined"
               margin="normal"
               required
@@ -123,7 +115,6 @@ export default function SignIn() {
               name="username"
               autoComplete="username"
               autoFocus
-              onChange={handleChange}
               InputProps={{
                 classes: {
                   notchedOutline: classes.notchedOutline
@@ -131,6 +122,7 @@ export default function SignIn() {
               }}
             />
             <TextField
+              inputRef={passwordRef}
               variant="outlined"
               margin="normal"
               required
@@ -140,7 +132,6 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={handleChange}
               InputProps={{
                 classes: {
                   notchedOutline: classes.notchedOutline
@@ -159,7 +150,7 @@ export default function SignIn() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href={process.env.PUBLIC_URL + "/signup"} variant="body2">
+                <Link component={CustomLink} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

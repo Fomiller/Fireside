@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../utils/GlobalContext';
 import Button from '@material-ui/core/Button';
@@ -24,15 +24,19 @@ const useStyles = makeStyles((theme) => ({
 export default function Join() {
   const [state, dispatch] = useAppContext()
   const [room, setRoom] = useState('');
+  const roomRef = useRef(null);
   const classes = useStyles();
+
+  const CustomLink = (props) => <Link  to={`/chat?name=${state.user.username}&room=${state.room}`} {...props} />
   
   return (
           <Grid item xs={12}>
             <TextField
+            inputRef={roomRef}
             id="outlined-basic"
             label="Enter Room"
             variant="outlined"
-            onChange={(event) => setRoom(event.target.value)}
+            onChange={() => dispatch({type:'SET_ROOM', payload:roomRef.current.value})}
             fullWidth
             className={classes.roomInput}
             InputProps={{
@@ -43,11 +47,11 @@ export default function Join() {
             />
             <Button
             fullWidth
-            component={Link}
+            component={CustomLink}
             variant="outlined"
             color='secondary'
-            onClick={event => (!room) ? event.preventDefault() : null}
-            to={`/chat?name=${state.user.username}&room=${room}`}>
+            onClick={event => (!state.room) ? event.preventDefault() : null}
+           >
               Join Chat Room
             </Button>
           </Grid>
