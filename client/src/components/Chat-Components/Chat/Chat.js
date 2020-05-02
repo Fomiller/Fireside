@@ -13,22 +13,19 @@ let socket;
 const Chat = (props) => {
   const { location } = props;
   const [state, dispatch] = useAppContext();
-  const [name, setName] = useState('');
-  const [room, setRoom] = useState('');
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  // const [name, setName] = useState('');
+  // const [room, setRoom] = useState('');
+  // const [message, setMessage] = useState('');
+  // const [messages, setMessages] = useState([]);
   // const ENDPOINT = 'localhost:5000';
   // const ENDPOINT = process.env.PUBLIC_URL || 'localhost:5000';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)
-
     socket = io();
-
-    setName(name);
-    setRoom(room);
+    dispatch({type:'SET_NAME', payload: name});
+    dispatch({type:'SET_ROOM', payload: room});
     socket.emit('join', { name, room: room }, () => {
-
     });
 
     return () => {
@@ -43,45 +40,57 @@ const Chat = (props) => {
         const loggedInUser = await getLoggedInUser();
         dispatch({ type: "SET_USER", payload: loggedInUser });
       })();
-    }    
-  }, []);
-
-  useEffect(() => {
-    if (state.loggedIn) {   
+    } else {
       (async () => {
-        const allMessages = await getMessages(room);
-        const messageArray =[]
-        allMessages.forEach((m) => {
-          messageArray.push({ text: m.message, user: m.sender})
-        })
-        dispatch({ type: "SET_MESSAGES", payload: messageArray });
-        setMessages(messages => [...messages, ...messageArray]);
+        console.log('CHAT STATE', state)
+        const allMessages = await getMessages(state.room);
+        const messageArray = allMessages.map((m) => {
+          return { text: m.message, user: m.sender}
+        });
+        console.log("MESSAGE ARRAY", messageArray)
+        dispatch({ type: "SET_MESSAGES", payload: messageArray});
+        // setMessages(messages => [...messages, ...messageArray]);
       })();
     }
-  }, [state.loggedIn]);
+  },[state.user])
 
   useEffect(() => {
+    if (state.user) {   
+      (async () => {
+        const allMessages = await getMessages(state.room);
+        const messageArray = allMessages.map((m) => {
+          return { text: m.message, user: m.sender}
+        });
+        // dispatch({ type: "SET_MESSAGES", payload: messageArray});
+        // setMessages(messages => [...messages, ...messageArray]);
+      })();
+    }
     socket.on("message", message => {
-      setMessages(messages => [...messages, message]);
+      dispatch({type: "SET_MESSAGES", payload:message})
+      // setMessages(messages => [...messages, message]);
     });
   }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-    if (message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+    if (state.message) {
+      socket.emit('sendMessage', state.message, () => dispatch({type:'SET_MESSAGE', payload:''}));
     }
   }
-
-  return (
-    <div className="outerContainer">
-      <div className="container">
-        <InfoBar room={room} />
-        <Messages messages={messages} name={name} />
-        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+  if(state.user) {
+    return (
+      <div className="outerContainer">
+        <div className="container">
+          <InfoBar room={state.room} />
+          <Messages messages={state.messages} name={state.name} />
+          <Input message={state.message} setMessage={(payload) => dispatch({ type:"SET_MESSAGE", payload })} sendMessage={sendMessage} />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+  else {
+    return <h1>Not Here</h1>
+  }
 }
 
 export default Chat;
