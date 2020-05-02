@@ -25,6 +25,22 @@ export const login = async (data) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    const res = await axios.post('/api/logout');
+    if (res.status === 200 && window) {
+      
+      return res.data;
+    }
+    return null;
+  }
+  catch (err) {
+    console.log("Logout CLIENT SIDE ERROR: ", err);
+  }
+};
+
+
+
 export const getLoggedInUser = async () => {
   try {
     const res = await axios.get('/api/loggedinuser');
@@ -51,3 +67,4 @@ export const getMessages = async (room) => {
     console.log("GET MESSAGES ERROR: ", err);
   }
 };
+

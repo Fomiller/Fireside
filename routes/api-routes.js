@@ -41,6 +41,12 @@ router.post('/api/login', passport.authenticate('local'), async (req, res) => {
   }
 });
 
+router.post('/api/logout', function(req, res){
+  req.logout();
+  console.log('logging out');
+  res.send('logged out');
+});
+
 router.get('/api/loggedinuser', (req, res) => {
   if (req.user) {
     return res.send(req.user);

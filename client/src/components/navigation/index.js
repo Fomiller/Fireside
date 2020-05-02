@@ -98,7 +98,7 @@ export default function NavbarDrawer(props) {
   const theme = useTheme();
   const [state, dispatch] = useAppContext();
   const [open, setOpen] = React.useState(false);
-  console.log("STATE: ",state);
+  // console.log("STATE: ",state);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,21 +110,15 @@ export default function NavbarDrawer(props) {
 
 
   useEffect(() => {
-    if (!state.user) {
-      (async () => {
-        const loggedInUser = await getLoggedInUser();
-        dispatch({type: "SET_USER", payload:loggedInUser});
-      })(); 
-    }
+    // if (!state.user) {
+    //   (async () => {
+    //     const loggedInUser = await getLoggedInUser();
+    //     dispatch({type: "SET_USER", payload:loggedInUser});
+    //   })(); 
+    // }
   },[]);
 
-  if(state.loggedIn && !state.user) {
-    return <Redirect to={process.env.PUBLIC_URL + '/signin'}/>
-
-  } else if (!state.loggedIn) {
-    return <h1>Loading</h1>;
-
-  } else {
+if (state.user){
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -183,5 +177,7 @@ export default function NavbarDrawer(props) {
       </main>
     </div>
   );
+  } else {
+    return <h1>not logged in nav</h1>
   }
 }
