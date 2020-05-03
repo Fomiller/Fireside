@@ -1,6 +1,6 @@
 
 # Fireside
-![Commits](https://img.shields.io/github/last-commit/Fomiller/https://github.com/Fomiller/Final-Project)  
+![Commits](https://img.shields.io/github/last-commit/Fomiller/Final-Project)  
 ## Languages
 ![HTML](https://img.shields.io/badge/language-HTML-orange)&ensp;![CSS](https://img.shields.io/badge/language-CSS-blue)&ensp;![JavaScript](https://img.shields.io/badge/language-JavaScript-blueviolet)&ensp;![Node.js](https://img.shields.io/badge/language-Node.js-yellow)&ensp;![React.js](https://img.shields.io/badge/language-React.js-yellow)&ensp;
 ## Description
