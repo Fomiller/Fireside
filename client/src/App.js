@@ -25,10 +25,6 @@ function App() {
               <SignUp/>
               <StickyFooter/>
             </Route>
-            {/* <Route exact path={['/','/home']}>
-              <NavbarDrawer/>
-              <Home/>
-            </Route> */}
             <Route exact path={process.env.PUBLIC_URL + '/user/:id'}>
               <NavbarDrawer/>
               <User/>
