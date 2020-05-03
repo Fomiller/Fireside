@@ -3,16 +3,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import MaterialLink from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { login, getLoggedInUser } from '../utils/API';
+import { login} from '../utils/API';
 import { useAppContext } from '../utils/GlobalContext';
 import {Redirect} from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -25,10 +22,11 @@ function Alert(props) {
 }
 
 function Copyright() {
+  const classes = useStyles();
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href={process.env.PUBLIC_URL + "/signup"}>
+      <Link color="inherit" className={classes.customLink} href={process.env.PUBLIC_URL + "/signup"}>
         Fireside
       </Link>{' '}
       {new Date().getFullYear()}
@@ -58,7 +56,14 @@ const useStyles = makeStyles((theme) => ({
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "yellow !important",
-  }
+  },
+  customLink: {
+    color: "rgba(140, 30, 255, 1) !important",
+    textDecoration:'none',
+    "&:hover": {
+      textDecoration:'underline',
+    }
+  },
 }));
 
 export default function SignIn() {
@@ -68,7 +73,7 @@ export default function SignIn() {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
-  const CustomLink = (props) => <Link to={process.env.PUBLIC_URL + "/signup"} {...props} />
+  const CustomLink = (props) => <Link className={classes.customLink} to={process.env.PUBLIC_URL + "/signup"} {...props} />
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
