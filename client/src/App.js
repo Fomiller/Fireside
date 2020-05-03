@@ -15,7 +15,6 @@ function App() {
   return (
     <AppProvider>
       <ThemeProvider theme={SynthWaveTheme}>
-        <Paper square="true">
         <Router>
           <Switch>
             <Route exact path={process.env.PUBLIC_URL + '/signin'}>
@@ -41,7 +40,6 @@ function App() {
             </Route>
           </Switch>
         </Router>
-        </Paper>
       </ThemeProvider>
     </AppProvider>
   );
