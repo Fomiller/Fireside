@@ -5,10 +5,10 @@
 ![HTML](https://img.shields.io/badge/language-HTML-orange)&ensp;![CSS](https://img.shields.io/badge/language-CSS-blue)&ensp;![JavaScript](https://img.shields.io/badge/language-JavaScript-blueviolet)&ensp;![Node.js](https://img.shields.io/badge/language-Node.js-yellow)&ensp;![React.js](https://img.shields.io/badge/language-React.js-yellow)&ensp;
 
 ## Authors
-Forrest Miller [github](https://github.com/Fomiller)
+Forrest Miller Front end - [github](https://github.com/Fomiller)
 
 
-Bradley Goff [github]()
+Bradley Goff Back end- [github](https://github.com/bg9892)
 
 ## Description
 Fireside is a real time chat application for when you and those around you need to have a fireside chat. With the world’s work environment shifting everyday to being more and more remote, sometimes people need to have a one off conversation in a comfortable environment. Common communication channels such as Slack, Microsoft Teams, and others may feel to formal for these side conversations. 
