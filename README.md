@@ -27,9 +27,10 @@ You can view our teams market research [here](./MarketResearch.md)
 * [Contact](#Contact)
 
 ## Wire Frame
-<img src="./client/public/wireframe_01" />
+<img src="./client/public/wireframe_01.png" />
 
 ## Data Flow
+<img src="./client/public/#" />
 
 ## Installation
 Once you clone the repository make sure to run npm install before launching the application locally.
