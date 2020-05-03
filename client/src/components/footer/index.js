@@ -8,9 +8,8 @@ function Copyright() {
   return (
     <Typography align="center" variant="body2" color="textSecondary">
       {'Copyright © '}
-      <Link color="inherit" href="/signin">
         Fireside
-      </Link>{' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
