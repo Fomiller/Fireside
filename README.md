@@ -17,12 +17,15 @@ You can view our teams market research [here](./MarketResearch.md)
 <img src="./client/public/screenshots/user_profile.PNG" />
 
 ## Table of Contents
+* [Installation](#Wire Frame and Data Flow)
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Contributing](#Contributing)
 * [License](#License)
 * [Languages](#Languages)
 * [Contact](#Contact)
+
+## Wire Frame and Data Flow
 
 ## Installation
 Once you clone the repository make sure to run npm install before launching the application locally.
