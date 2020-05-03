@@ -7,7 +7,7 @@ import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
 import { useAppContext } from '../../../utils/GlobalContext';
 import { getMessages, getLoggedInUser } from '../../../utils/API';
-
+import Loader from 'react-loader-spinner';
 let socket;
 
 const Chat = (props) => {
@@ -77,7 +77,17 @@ const Chat = (props) => {
     )
   }
   else {
-    return <h1></h1>
+    return (
+      <div className="outerContainer">
+        <Loader
+        type="Puff"
+        color="#8C1EFF"
+        height={100}
+        width={100}
+        timeout={10000} //3 secs
+        />
+      </div>
+    );
   }
 }
 
