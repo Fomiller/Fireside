@@ -17,14 +17,13 @@ You can view our teams market research [here](./MarketResearch.md)
 <img src="./client/public/screenshots/user_profile.PNG" />
 
 ## Table of Contents
-* [WireFrame](#WireFrame)
+* [WireFrame](#Wire Frame)
 * [Data-Flow](#Data-Flow)
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Contributing](#Contributing)
 * [License](#License)
 * [Languages](#Languages)
-* [Contact](#Contact)
 
 ## Wire Frame
 <img src="./client/public/wireframe_01.png" />
