@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Route, Link } from 'react-router-dom';
 import { useAppContext } from '../../utils/GlobalContext';
 import {Redirect} from 'react-router-dom';
@@ -86,6 +86,9 @@ const useStyles = makeStyles((theme) => ({
   },
   dividerColor: {
     backgroundColor: "yellow",
+  },
+  exitIcon: {
+    color: theme.palette.error.dark
   }
 }));
 
@@ -159,11 +162,11 @@ if (state.user){
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-          <ListItemLink key="Profile" to={process.env.PUBLIC_URL + `/user/${state.user._id}`}>
+          <ListItemLink key="Profile" onClick={() => dispatch({type:"LOGOUT"})}>
             <ListItemIcon>
-              <PersonIcon color="secondary"/>
+              <ExitToAppIcon className={classes.exitIcon}/>
             </ListItemIcon>
-            <ListItemText primary="Profile"/>
+            <ListItemText primary="Logout"/>
           </ListItemLink>
         </List>
         <Divider classes={{root: classes.dividerColor}}/>
