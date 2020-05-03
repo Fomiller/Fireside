@@ -27,7 +27,7 @@ You can view our teams market research [here](./MarketResearch.md)
 * [Contact](#Contact)
 
 ## Wire Frame
-<img src="./client/public/wireframe_01.PNG" />
+<img src="./client/public/wireframe_01" />
 
 ## Data Flow
 
