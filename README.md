@@ -30,7 +30,7 @@ You can view our teams market research [here](./MarketResearch.md)
 <img src="./client/public/wireframe_01.png" />
 
 ## Data Flow
-<img src="./client/public/data_flow02.png" />
+<img src="./client/public/dataflow_02.png" />
 
 ## Installation
 Once you clone the repository make sure to run npm install before launching the application locally.
