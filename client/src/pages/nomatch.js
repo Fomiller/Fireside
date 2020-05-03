@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
 
 export default function NoMatch() {
 
