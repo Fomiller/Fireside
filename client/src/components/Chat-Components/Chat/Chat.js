@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import './Chat.css';
@@ -7,18 +7,12 @@ import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
 import { useAppContext } from '../../../utils/GlobalContext';
 import { getMessages, getLoggedInUser } from '../../../utils/API';
-
+import Loader from 'react-loader-spinner';
 let socket;
 
 const Chat = (props) => {
   const { location } = props;
   const [state, dispatch] = useAppContext();
-  // const [name, setName] = useState('');
-  // const [room, setRoom] = useState('');
-  // const [message, setMessage] = useState('');
-  // const [messages, setMessages] = useState([]);
-  // const ENDPOINT = 'localhost:5000';
-  // const ENDPOINT = process.env.PUBLIC_URL || 'localhost:5000';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)
@@ -42,14 +36,11 @@ const Chat = (props) => {
       })();
     } else {
       (async () => {
-        console.log('CHAT STATE', state)
         const allMessages = await getMessages(state.room);
         const messageArray = allMessages.map((m) => {
           return { text: m.message, user: m.sender}
         });
-        console.log("MESSAGE ARRAY", messageArray)
         dispatch({ type: "SET_MESSAGES", payload: messageArray});
-        // setMessages(messages => [...messages, ...messageArray]);
       })();
     }
   },[state.user])
@@ -61,13 +52,10 @@ const Chat = (props) => {
         const messageArray = allMessages.map((m) => {
           return { text: m.message, user: m.sender}
         });
-        // dispatch({ type: "SET_MESSAGES", payload: messageArray});
-        // setMessages(messages => [...messages, ...messageArray]);
       })();
     }
     socket.on("message", message => {
       dispatch({type: "SET_MESSAGES", payload:message})
-      // setMessages(messages => [...messages, message]);
     });
   }, []);
 
@@ -89,7 +77,17 @@ const Chat = (props) => {
     )
   }
   else {
-    return <h1>Not Here</h1>
+    return (
+      <div className="outerContainer">
+        <Loader
+        type="Puff"
+        color="#8C1EFF"
+        height={100}
+        width={100}
+        timeout={10000} //3 secs
+        />
+      </div>
+    );
   }
 }
 

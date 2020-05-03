@@ -8,9 +8,8 @@ function Copyright() {
   return (
     <Typography align="center" variant="body2" color="textSecondary">
       {'Copyright © '}
-      <Link color="inherit" href="/signin">
         Fireside
-      </Link>{' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -21,8 +20,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    // justifyContent: 'center',
-    // minHeight: '50vh',
   },
   main: {
     marginTop: theme.spacing(8),
@@ -44,10 +41,8 @@ export default function StickyFooter() {
 
   return (
     <div className={classes.root}>
-
       <footer className={classes.footer}>
         <Container maxWidth="sm">
-          {/* <Typography variant="body1">My sticky footer can be found here.</Typography> */}
           <Copyright />
         </Container>
       </footer>

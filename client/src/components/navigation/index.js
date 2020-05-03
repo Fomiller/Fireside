@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,13 +15,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import PersonIcon from '@material-ui/icons/Person';
-import { Route, Link } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '../../utils/GlobalContext';
-import {Redirect} from 'react-router-dom';
-import { getLoggedInUser } from '../../utils/API';
+
 
 const drawerWidth = 240;
 
@@ -86,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
   },
   dividerColor: {
     backgroundColor: "yellow",
+  },
+  exitIcon: {
+    color: theme.palette.error.dark
   }
 }));
 
@@ -98,7 +98,6 @@ export default function NavbarDrawer(props) {
   const theme = useTheme();
   const [state, dispatch] = useAppContext();
   const [open, setOpen] = React.useState(false);
-  // console.log("STATE: ",state);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -107,16 +106,6 @@ export default function NavbarDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-
-  useEffect(() => {
-    // if (!state.user) {
-    //   (async () => {
-    //     const loggedInUser = await getLoggedInUser();
-    //     dispatch({type: "SET_USER", payload:loggedInUser});
-    //   })(); 
-    // }
-  },[]);
 
 if (state.user){
   return (
@@ -159,11 +148,11 @@ if (state.user){
         </div>
         <Divider classes={{root: classes.dividerColor}}/>
         <List>
-          <ListItemLink key="Profile" to={process.env.PUBLIC_URL + `/user/${state.user._id}`}>
+          <ListItemLink key="Profile" onClick={() => dispatch({type:"LOGOUT"})}>
             <ListItemIcon>
-              <PersonIcon color="secondary"/>
+              <ExitToAppIcon className={classes.exitIcon}/>
             </ListItemIcon>
-            <ListItemText primary="Profile"/>
+            <ListItemText primary="Logout"/>
           </ListItemLink>
         </List>
         <Divider classes={{root: classes.dividerColor}}/>
