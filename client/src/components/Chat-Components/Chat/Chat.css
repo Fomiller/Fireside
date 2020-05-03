@@ -16,10 +16,6 @@
   width: 35%;
 }
 
-.loaderSpinner {
-  
-}
-
 @media (min-width: 320px) and (max-width: 480px) {
   /* .outerContainer {
     height: 100%;
