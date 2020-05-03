@@ -17,7 +17,7 @@ You can view our teams market research [here](./MarketResearch.md)
 <img src="./client/public/screenshots/user_profile.PNG" />
 
 ## Table of Contents
-* [Installation](#Wire Frame and Data Flow)
+* [Wire Frame and Data Flow](#Wire Frame and Data Flow)
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Contributing](#Contributing)
