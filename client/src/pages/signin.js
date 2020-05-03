@@ -21,19 +21,6 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function Copyright() {
-  const classes = useStyles();
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" className={classes.customLink} href={process.env.PUBLIC_URL + "/signup"}>
-        Fireside
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -162,9 +149,6 @@ export default function SignIn() {
             </Grid>
           </form>
         </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
         <div className={classes.root}>
           {/* <Button variant="outlined" onClick={handleClick}>
             Open success snackbar
