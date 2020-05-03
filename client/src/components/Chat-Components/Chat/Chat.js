@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import './Chat.css';
@@ -13,12 +13,6 @@ let socket;
 const Chat = (props) => {
   const { location } = props;
   const [state, dispatch] = useAppContext();
-  // const [name, setName] = useState('');
-  // const [room, setRoom] = useState('');
-  // const [message, setMessage] = useState('');
-  // const [messages, setMessages] = useState([]);
-  // const ENDPOINT = 'localhost:5000';
-  // const ENDPOINT = process.env.PUBLIC_URL || 'localhost:5000';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search)

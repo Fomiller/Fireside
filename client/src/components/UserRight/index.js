@@ -2,8 +2,6 @@ import React, { useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Typography, Button, TextField } from '@material-ui/core';
 import {useAppContext} from '../../utils/GlobalContext';
-import Join from '../join';
-import { logout } from '../../utils/API';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
