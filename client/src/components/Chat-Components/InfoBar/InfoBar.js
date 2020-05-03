@@ -1,5 +1,4 @@
 import React from 'react';
-
 import closeIcon from '../../icons/closeIcon.png'
 import onlineIcon from '../../icons/onlineIcon.png'
 import './InfoBar.css'
@@ -16,7 +15,7 @@ export default function InfoBar ({ room }) {
         <h3>{room}</h3>
       </div>
       <div className="rightInnerContainer">
-        <Link to={`/user/${state.user.id}`}>
+        <Link to={process.env.PUBLIC_URL + `/user/${state.user.id}`}>
           <img src={closeIcon} alt="close image" />
         </Link>
       </div>

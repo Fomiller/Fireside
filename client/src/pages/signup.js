@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import MaterialLink from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,24 +16,8 @@ import MuiAlert from '@material-ui/lab/Alert';
 import './pages.css'
 import {Link} from 'react-router-dom';
 
-
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-function Copyright() {
-  const CustomLink = props => <Link to={process.env.PUBLIC_URL + "/signup"} {...props} />;  
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <MaterialLink color="inherit" component={CustomLink}>
-        Fireside
-      </MaterialLink>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -81,14 +64,11 @@ export default function SignUp() {
     const name = e.currentTarget.name
     const value = e.currentTarget.value
     setState({...state, [name]: value})
-    console.log(state)
   }
   
   const handleUserSubmit = async (e) => {
     e.preventDefault()
-    console.log("NEW USER STATE",state)
     const user = await createUser(state);
-    console.log(user);
     if(!user.data) {
       setOpen(true);
       return
@@ -220,13 +200,7 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
       <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           Please make sure to fill out the signup form completely.

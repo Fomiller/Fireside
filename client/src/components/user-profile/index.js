@@ -34,12 +34,6 @@ export default function UserProfile() {
   
   useEffect(() => {
     dispatch({type:'CLEAR_MESSAGES', payload:[]})
-    // if (!state.user) {
-    //   (async () => {
-    //     const loggedInUser = await getLoggedInUser();
-    //     dispatch({type: "SET_USER", payload:loggedInUser});
-    //   })(); 
-    // }
   },[]);
 
 if (state.user){
@@ -48,7 +42,7 @@ if (state.user){
       <Paper elevation={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <img className={classes.avatarImg} max src={process.env.PUBLIC_URL + `${state.user.avatar}`}/>
+            <img className={classes.avatarImg} alt="user profile" max src={process.env.PUBLIC_URL + `${state.user.avatar}`}/>
           </Grid>
           <Grid item xs={12} md={6}>
             <UserRight/>
@@ -60,6 +54,6 @@ if (state.user){
     </div>
   );
   } else {
-    return <Redirect to='/signin'/>
+    return <Redirect to={process.env.PUBLIC_URL + '/signin'}/>
   }
 }

@@ -58,7 +58,6 @@ export const getMessages = async (room) => {
   try {
     const res = await axios.get('/api/messages/' + room);
     if (res.data) {
-      console.log('API: ',res.data);
       return res.data;
     }
     return null;

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../utils/GlobalContext';
 import Button from '@material-ui/core/Button';
-import { Box } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import {Grid} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,13 +38,14 @@ export default function Join() {
             variant="outlined"
             onChange={() => dispatch({type:'SET_ROOM', payload:roomRef.current.value})}
             fullWidth
-            className={classes.roomInput}
+            // className={classes.roomInput}
             InputProps={{
               classes: {
                 notchedOutline: classes.notchedOutline
               }
             }}
             />
+            <Divider/>
             <Button
             fullWidth
             component={CustomLink}
@@ -52,7 +53,7 @@ export default function Join() {
             color='secondary'
             onClick={event => (!state.room) ? event.preventDefault() : null}
            >
-              Join Chat Room
+            Join Chat Room
             </Button>
           </Grid>
   );
