@@ -18,6 +18,7 @@ You can view our teams market research [here](./MarketResearch.md)
 
 ## Table of Contents
 * [WireFrame](#WireFrame)
+* [Data-Flow](#Data-Flow)
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Contributing](#Contributing)
@@ -25,7 +26,10 @@ You can view our teams market research [here](./MarketResearch.md)
 * [Languages](#Languages)
 * [Contact](#Contact)
 
-## Wire Frame and Data Flow
+## Wire Frame
+<img src="./client/public/wireframe_01.PNG" />
+
+## Data Flow
 
 ## Installation
 Once you clone the repository make sure to run npm install before launching the application locally.
