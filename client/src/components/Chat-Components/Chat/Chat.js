@@ -36,14 +36,11 @@ const Chat = (props) => {
       })();
     } else {
       (async () => {
-        console.log('CHAT STATE', state)
         const allMessages = await getMessages(state.room);
         const messageArray = allMessages.map((m) => {
           return { text: m.message, user: m.sender}
         });
-        console.log("MESSAGE ARRAY", messageArray)
         dispatch({ type: "SET_MESSAGES", payload: messageArray});
-        // setMessages(messages => [...messages, ...messageArray]);
       })();
     }
   },[state.user])
@@ -55,13 +52,10 @@ const Chat = (props) => {
         const messageArray = allMessages.map((m) => {
           return { text: m.message, user: m.sender}
         });
-        // dispatch({ type: "SET_MESSAGES", payload: messageArray});
-        // setMessages(messages => [...messages, ...messageArray]);
       })();
     }
     socket.on("message", message => {
       dispatch({type: "SET_MESSAGES", payload:message})
-      // setMessages(messages => [...messages, message]);
     });
   }, []);
 
@@ -83,7 +77,7 @@ const Chat = (props) => {
     )
   }
   else {
-    return <h1>Not Here</h1>
+    return <h1></h1>
   }
 }
 

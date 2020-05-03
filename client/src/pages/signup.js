@@ -16,13 +16,9 @@ import MuiAlert from '@material-ui/lab/Alert';
 import './pages.css'
 import {Link} from 'react-router-dom';
 
-
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,14 +64,11 @@ export default function SignUp() {
     const name = e.currentTarget.name
     const value = e.currentTarget.value
     setState({...state, [name]: value})
-    console.log(state)
   }
   
   const handleUserSubmit = async (e) => {
     e.preventDefault()
-    console.log("NEW USER STATE",state)
     const user = await createUser(state);
-    console.log(user);
     if(!user.data) {
       setOpen(true);
       return
@@ -208,9 +201,6 @@ export default function SignUp() {
         </form>
       </div>
       <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           Please make sure to fill out the signup form completely.

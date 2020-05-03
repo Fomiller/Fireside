@@ -3,7 +3,6 @@ import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 
 export default function NoMatch() {
-
   return (
     <Container>
       <Typography align='center'>

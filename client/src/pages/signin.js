@@ -76,7 +76,6 @@ export default function SignIn() {
     if(user === undefined) {
       setOpen(true)
     }
-    console.log(user)
     dispatch({type: "SET_USER", payload:user});
   }
 
@@ -149,9 +148,6 @@ export default function SignIn() {
           </form>
         </div>
         <div className={classes.root}>
-          {/* <Button variant="outlined" onClick={handleClick}>
-            Open success snackbar
-          </Button> */}
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
               Please check your user name and password.
