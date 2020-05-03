@@ -6,6 +6,8 @@
 ## Description
 Fireside is a real time chat application for when you and those around you need to have a fireside chat. With the world’s work environment shifting everyday to being more and more remote, sometimes people need to have a one off conversation in a comfortable environment. Common communication channels such as Slack, Microsoft Teams, and others may feel to formal for these side conversations. 
 
+<img src="./client/public/screenshots/user_profile.PNG" />
+
 ## Table of Contents
 * [Installation](#Installation)
 * [Usage](#Usage)
