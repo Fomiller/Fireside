@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
       textDecoration:'underline',
     }
   },
+  test: {
+    minHeight: "100vh", /* will cover the 100% of viewport */
+    overflow: "hidden",
+    display: "block",
+    position: "relative",
+    paddingBottom: "100px", /* height of your footer */
+  }
 }));
 
 export default function SignIn() {
@@ -84,7 +91,7 @@ export default function SignIn() {
     return <Redirect to={process.env.PUBLIC_URL + `/user/${state.user.id}`}/>;
   } else {
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" className={classes.test} maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
